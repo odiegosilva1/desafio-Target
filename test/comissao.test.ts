@@ -155,3 +155,16 @@ describe('totais do arquivo data/vendas.json', () => {
     assert.equal(total, 174_602);
   });
 });
+describe('regressao: arredondamento dos casos .xx5', () => {
+  it('os cinco casos do arquivo, arredondados por venda', async () => {
+    const { carregarVendas } = await import('../src/comissao/io.ts');
+    const vendas = await carregarVendas('data/vendas.json');
+    const resumos = agregarPorVendedor(vendas);
+
+    // João Silva: 1100.9 -> 55.05 (5505)
+    assert.equal(resumos[0]?.totalComissao, 49_569);
+    assert.equal(resumos[1]?.totalComissao, 46_596);
+    assert.equal(resumos[2]?.totalComissao, 37_938);
+    assert.equal(resumos[3]?.totalComissao, 40_499);
+  });
+});
