@@ -1,0 +1,6 @@
+{
+  "estoque": [
+    { "codigoProduto": 101, "descricaoProduto": "A", "estoque": 1 },
+    { "codigoProduto": 101, "descricaoProduto": "B", "estoque": 2 }
+  ]
+}
