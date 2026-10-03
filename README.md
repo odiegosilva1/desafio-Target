@@ -2,7 +2,6 @@
 
 Solucao em TypeScript, executada direto pelo Node 24 sem etapa de build.
 
-Zero dependencias de runtime.
 
 ## Como rodar
 
