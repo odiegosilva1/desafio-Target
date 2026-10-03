@@ -24,6 +24,16 @@ describe('paraCentavos', () => {
     assert.equal(paraCentavos('1200,50'), 120_050);
   });
 
+  it('aceita notacao brasileira com ponto de milhar', () => {
+    assert.equal(paraCentavos('1.000,00'), 100_000);
+    assert.equal(paraCentavos('12.345.678,90'), 1_234_567_890);
+  });
+
+  it('rejeita milhar misturado com decimal de ponto', () => {
+    // "1.000.00" e ambiguo demais para ser lido como quantia.
+    assert.throws(() => paraCentavos('1.000.00'), RangeError);
+  });
+
   it('completa centavos ausentes', () => {
     assert.equal(paraCentavos('12.5'), 1_250);
     assert.equal(paraCentavos('7'), 700);
