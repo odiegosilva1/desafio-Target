@@ -181,6 +181,4 @@ main        tag v0.1.0 (tooling) · v1.0.0 (entrega)
        └─ feature/3-juros      merge --no-ff
 ```
 
-Um branch e um merge por exercicio, entao cada um pode ser avaliado isolado.
-Commits no padrao Conventional Commits. O repo nao tem remote, entao o
-merge e local; o historico fica identico ao que seria feito via PR.
+
