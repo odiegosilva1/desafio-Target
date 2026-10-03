@@ -73,13 +73,16 @@ function executar(estoque: Estoque, tokens: string[]): void {
     case 'entrada':
     case 'saida': {
       const [codigoTexto, quantidadeTexto] = resto;
-      const codigo = Number(codigoTexto);
-      const quantidade = Number(quantidadeTexto);
-
       if (codigoTexto === undefined || quantidadeTexto === undefined) {
         console.error(`uso: ${comando} <codigo> <quantidade>`);
         return;
       }
+      if (!/^-?\d+$/.test(codigoTexto) || !/^-?\d+$/.test(quantidadeTexto)) {
+        console.error(`codigo ou quantidade invalidos: ${codigoTexto} ${quantidadeTexto}`);
+        return;
+      }
+      const codigo = Number(codigoTexto);
+      const quantidade = Number(quantidadeTexto);
 
       // `comando` ja foi limitado a 'entrada' | 'saida' pelo `case`.
       const { movimentacao, saldoFinal } = estoque.registrar(
@@ -94,9 +97,13 @@ function executar(estoque: Estoque, tokens: string[]): void {
     }
 
     case 'saldo': {
-      const [codigoTexto] = resto;
-      if (codigoTexto === undefined) {
+      const [codigoTexto, extra] = resto;
+      if (codigoTexto === undefined || extra !== undefined) {
         console.error('uso: saldo <codigo>');
+        return;
+      }
+      if (!/^\d+$/.test(codigoTexto)) {
+        console.error(`codigo invalido: ${codigoTexto}`);
         return;
       }
       const codigo = Number(codigoTexto);
