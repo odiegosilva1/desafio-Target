@@ -5,10 +5,15 @@ export default tseslint.config(
   {
     ignores: ['node_modules/**', 'dist/**', 'data/**'],
   },
-  js.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
+  // O proprio arquivo de configuracao nao faz parte do tsconfig, entao a
+  // analise com informacao de tipos se aplica so aos arquivos .ts/.tsx.
   {
+    files: ['**/*.ts', '**/*.tsx'],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.strictTypeChecked,
+      ...tseslint.configs.stylisticTypeChecked,
+    ],
     languageOptions: {
       parserOptions: {
         projectService: true,
@@ -32,7 +37,10 @@ export default tseslint.config(
   {
     files: ['test/**/*.ts'],
     rules: {
-      '@typescript-eslint/no-non-null-assertion': 'off',
+      // `it` e `describe` do node:test retornam Promise. O runner trata a
+      // rejeicao e reporta a falha; exigir `await` em cada caso so
+      // adicionaria ruido sem ganho de seguranca.
+      '@typescript-eslint/no-floating-promises': 'off',
     },
   },
 );
