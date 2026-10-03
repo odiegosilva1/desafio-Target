@@ -28,7 +28,13 @@ export function paraCentavos(valor: number | string): Centavos {
     return paraCentavos(valor.toFixed(2));
   }
 
-  const texto = valor.trim().replace(',', '.');
+  // Aceita as duas notacoes: "1200.50" e "1.200,50". O ponto e milhar
+  // quando ha virgula; sem virgula, e decimal.
+  const cru = valor.trim();
+  const texto = cru.includes(',')
+    ? cru.replace(/\./g, '').replace(',', '.')
+    : cru;
+
   if (!/^-?\d+(\.\d{1,2})?$/.test(texto)) {
     throw new RangeError(`valor invalido: "${valor}"`);
   }
