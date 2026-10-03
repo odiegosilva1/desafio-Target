@@ -19,11 +19,3 @@ export class ErroEntradaInvalida extends ErroDominio {}
 /** A operacao viola uma regra de negocio (ex.: saldo insuficiente). */
 export class ErroRegraDeNegocio extends ErroDominio {}
 
-/** Registra a origem de um erro, preservando a pilha original. */
-export function envolver(erro: unknown, contexto: string): ErroDominio {
-  if (erro instanceof ErroDominio) {
-    return erro;
-  }
-  const detalhe = erro instanceof Error ? erro.message : String(erro);
-  return new ErroEntradaInvalida(`${contexto}: ${detalhe}`);
-}

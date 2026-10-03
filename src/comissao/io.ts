@@ -9,7 +9,7 @@
 
 import { readFile } from 'node:fs/promises';
 
-import { ErroEntradaInvalida, envolver } from '../shared/erros.ts';
+import { ErroEntradaInvalida } from '../shared/erros.ts';
 import { paraCentavos, type Centavos } from '../shared/money.ts';
 import type { Venda } from './domain.ts';
 
@@ -70,18 +70,16 @@ export async function carregarVendas(
   try {
     conteudo = await readFile(caminho, 'utf8');
   } catch (erro) {
-    throw new ErroEntradaInvalida(
-      `nao foi possivel ler ${caminho}: ${involucro(erro)}`,
-    );
+    const detalhe = erro instanceof Error ? erro.message : String(erro);
+    throw new ErroEntradaInvalida(`nao foi possivel ler ${caminho}: ${detalhe}`);
   }
 
   let dados: unknown;
   try {
     dados = JSON.parse(conteudo);
   } catch (erro) {
-    throw new ErroEntradaInvalida(
-      `${caminho} contem JSON invalido: ${involucro(erro)}`,
-    );
+    const detalhe = erro instanceof Error ? erro.message : String(erro);
+    throw new ErroEntradaInvalida(`${caminho} contem JSON invalido: ${detalhe}`);
   }
 
   if (typeof dados !== 'object' || dados === null || !('vendas' in dados)) {
@@ -98,6 +96,4 @@ export async function carregarVendas(
   return validar(vendas);
 }
 
-function involucro(erro: unknown): string {
-  return envolver(erro, 'falha ao ler').message.replace('falha ao ler: ', '');
-}
+
