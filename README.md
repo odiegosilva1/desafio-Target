@@ -1,13 +1,12 @@
 # Desafio Target
 
-Solucao dos tres exercicios do enunciado (`spec.md`, nao versionado) em
-TypeScript, executada direto pelo Node 24 sem etapa de build.
+Solucao em TypeScript, executada direto pelo Node 24 sem etapa de build.
 
 Zero dependencias de runtime.
 
 ## Como rodar
 
-Requer Node 24 ou superior (o projeto usa remocao de tipos nativa).
+Requer Node 24 ou superior.
 
 ```bash
 npm install
